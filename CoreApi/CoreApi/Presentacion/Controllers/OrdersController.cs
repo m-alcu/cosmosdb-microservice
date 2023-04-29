@@ -1,4 +1,5 @@
 using CoreApi.Domain.Model;
+using CoreApi.Infrastructure;
 using CoreApi.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +13,18 @@ namespace CoreApi.External.Controllers
 
         private readonly ILogger<OrdersController> _logger;
 
-        public OrdersController(ILogger<OrdersController> logger)
+        private readonly AppSettingsService _appSettingsService;
+
+        public OrdersController(ILogger<OrdersController> logger, AppSettingsService appSettingsService)
         {
             _logger = logger;
+            _appSettingsService = appSettingsService;
         }
 
         [HttpPost]
         public async Task PostAsync(Order order)
         {
-            using (var context = new OrderContext())
+            using (var context = new OrderContext(_appSettingsService))
             {
                 await context.Database.EnsureCreatedAsync();
 
@@ -39,7 +43,7 @@ namespace CoreApi.External.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetAllAsync()
         {
-            using (var context = new OrderContext())
+            using (var context = new OrderContext(_appSettingsService))
             {
                 await context.Database.EnsureCreatedAsync();
 
@@ -51,7 +55,7 @@ namespace CoreApi.External.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetByIdAsync(int id)
         {
-            using (var context = new OrderContext())
+            using (var context = new OrderContext(_appSettingsService))
             {
                 var order = await context.Orders.FindAsync(id, id.ToString());
                 if (order == null)
@@ -65,7 +69,7 @@ namespace CoreApi.External.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            using (var context = new OrderContext())
+            using (var context = new OrderContext(_appSettingsService))
             {
                 var order = await context.Orders.FindAsync(id, id.ToString());
                 if (order == null)

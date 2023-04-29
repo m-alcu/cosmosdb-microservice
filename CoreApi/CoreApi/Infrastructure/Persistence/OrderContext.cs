@@ -8,12 +8,23 @@ public class OrderContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<Distributor> Distributors { get; set; }
 
+    public AppSettingsService _appSettingsService;
+
+    public OrderContext(AppSettingsService appSettingsService)
+    {
+        _appSettingsService = appSettingsService;
+    }
+
+
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        string accountEndpoint = configuration["CosmosDbSettings:EndpointUri"];
-        string accountKey = configuration["CosmosDbSettings:PrimaryKey"];
+        //var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        //string accountEndpoint = configuration["EndpointUri"];
+        //string accountKey = configuration["PrimaryKey"];
+        string accountEndpoint = _appSettingsService.AppSettings.EndpointUri;
+        string accountKey = _appSettingsService.AppSettings.PrimaryKey;
+
 
         optionsBuilder.UseCosmos(accountEndpoint, accountKey, databaseName: "OrdersDB");
     }
