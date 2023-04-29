@@ -15,4 +15,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Domain\DomainEvents\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Domain\ValueObjects\" />
+    <Folder Include="Domain\Shared\" />
+  </ItemGroup>
+
 </Project>

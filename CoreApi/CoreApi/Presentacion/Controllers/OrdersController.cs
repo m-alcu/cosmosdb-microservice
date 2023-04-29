@@ -1,9 +1,9 @@
-using CoreApi.Model;
-using Cosmos.ModelBuilding;
+using CoreApi.Domain.Model;
+using CoreApi.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CoreApi.Controllers
+namespace CoreApi.External.Controllers
 {
     [ApiController]
     [Route("[controller]")]

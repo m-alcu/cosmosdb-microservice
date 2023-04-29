@@ -1,4 +1,4 @@
-﻿namespace CoreApi.Model
+﻿namespace CoreApi.Domain.Model
 {
     public class Order
     {

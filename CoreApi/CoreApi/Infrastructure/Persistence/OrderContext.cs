@@ -1,7 +1,7 @@
-﻿using CoreApi.Model;
+﻿using CoreApi.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cosmos.ModelBuilding;
+namespace CoreApi.Infrastructure.Database;
 
 public class OrderContext : DbContext
 {
