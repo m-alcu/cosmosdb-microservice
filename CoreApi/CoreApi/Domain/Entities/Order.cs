@@ -1,10 +1,9 @@
-﻿namespace CoreApi.Domain.Model
+﻿namespace CoreApi.Domain.Model;
+
+public class Order
 {
-    public class Order
-    {
-        public int Id { get; set; }
-        public int? TrackingNumber { get; set; }
-        public string PartitionKey { get; set; }
-        public StreetAddress ShippingAddress { get; set; }
-    }
+    public int Id { get; set; }
+    public int? TrackingNumber { get; set; }
+    public string PartitionKey { get; set; }
+    public StreetAddress ShippingAddress { get; set; }
 }

@@ -19,13 +19,8 @@ public class OrderContext : DbContext
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        //string accountEndpoint = configuration["EndpointUri"];
-        //string accountKey = configuration["PrimaryKey"];
         string accountEndpoint = _appSettingsService.AppSettings.EndpointUri;
         string accountKey = _appSettingsService.AppSettings.PrimaryKey;
-
-
         optionsBuilder.UseCosmos(accountEndpoint, accountKey, databaseName: "OrdersDB");
     }
     #endregion

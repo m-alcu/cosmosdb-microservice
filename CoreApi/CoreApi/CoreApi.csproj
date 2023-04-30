@@ -19,7 +19,6 @@
     <Folder Include="Application\Services\" />
     <Folder Include="Domain\DomainEvents\" />
     <Folder Include="Domain\ValueObjects\" />
-    <Folder Include="Domain\Shared\" />
   </ItemGroup>
 
 </Project>
