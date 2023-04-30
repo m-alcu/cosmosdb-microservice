@@ -1,8 +1,13 @@
-﻿namespace CoreApi.Domain.Model;
+﻿using CoreApi.Domain.Primitives;
 
-public class Order
+namespace CoreApi.Domain.Model;
+
+public class Order : Entity
 {
-    public int Id { get; set; }
+    public Order(Guid id) : base(id)
+    {
+    }
+
     public int? TrackingNumber { get; set; }
     public string PartitionKey { get; set; }
     public StreetAddress ShippingAddress { get; set; }

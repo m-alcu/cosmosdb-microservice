@@ -9,7 +9,7 @@ public abstract class Entity : IEquatable<Entity>
         Id = id;
     }
 
-    public Guid Id { get; private init; }
+    public Guid Id { get; set; }
 
     public static bool operator ==(Entity? left, Entity? right)
     {

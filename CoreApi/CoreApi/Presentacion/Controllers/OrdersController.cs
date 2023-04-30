@@ -29,11 +29,10 @@ namespace CoreApi.External.Controllers
                 await context.Database.EnsureCreatedAsync();
 
                 context.Add(
-                    new Order
+                    new Order(order.Id)
                     {
-                        Id = order.Id,
                         ShippingAddress = order.ShippingAddress,
-                        PartitionKey = order.PartitionKey
+                        PartitionKey = order.Id.ToString()
                     });
 
                 await context.SaveChangesAsync();
