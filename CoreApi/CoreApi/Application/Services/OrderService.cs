@@ -1,6 +1,7 @@
 ﻿using CoreApi.Domain.Model;
 using CoreApi.Infrastructure;
 using CoreApi.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreApi.Application.Services
 {
@@ -35,19 +36,40 @@ namespace CoreApi.Application.Services
             }
         }
 
-        public void DeleteOrder(Guid id)
+        public async Task<Order> DeleteOrder(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new OrderContext(_appSettingsService))
+            {
+                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+                if (order is null)
+                {
+                    return order;
+                }
+
+                context.Orders.Remove(order);
+                await context.SaveChangesAsync();
+
+                return order;
+            }
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            using (var context = new OrderContext(_appSettingsService))
+            {
+                await context.Database.EnsureCreatedAsync();
+
+                return await context.Orders.ToListAsync();
+
+            }
         }
 
-        public Order GetOrderById(Guid id)
+        public async Task<Order> GetOrderById(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new OrderContext(_appSettingsService))
+            {
+                return await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            }
         }
 
         public void UpdateOrder(Order order)

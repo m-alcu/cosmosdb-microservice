@@ -1,9 +1,7 @@
 using CoreApi.Application.Services;
 using CoreApi.Domain.Model;
 using CoreApi.Infrastructure;
-using CoreApi.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CoreApi.External.Controllers
 {
@@ -34,45 +32,31 @@ namespace CoreApi.External.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetAllAsync()
         {
-            using (var context = new OrderContext(_appSettingsService))
-            {
-                await context.Database.EnsureCreatedAsync();
-
-                var orders = await context.Orders.ToListAsync();
-                return Ok(orders);
-            }
+            return Ok(await _orderService.GetAllOrders());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetByIdAsync(Guid id)
         {
-            using (var context = new OrderContext(_appSettingsService))
+            var order = await _orderService.GetOrderById(id);
+            if (order is null)
             {
-                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-                if (order is null)
-                {
-                    return NotFound();
-                }
-                return Ok(order);
+                return NotFound();
             }
+            return Ok(order);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            using (var context = new OrderContext(_appSettingsService))
+            var order = await _orderService.DeleteOrder(id);
+
+            if (order is null)
             {
-                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-                if (order is null)
-                {
-                    return NotFound();
-                }
-
-                context.Orders.Remove(order);
-                await context.SaveChangesAsync();
-
-                return NoContent();
+                return NotFound();
             }
+
+            return NoContent();
         }
 
     }
