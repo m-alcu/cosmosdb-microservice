@@ -1,3 +1,4 @@
+using CoreApi.Application.Services;
 using CoreApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<AppSettingsService>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

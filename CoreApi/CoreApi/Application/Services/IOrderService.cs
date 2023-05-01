@@ -8,7 +8,7 @@ namespace CoreApi.Application.Services
 
         Order GetOrderById(Guid id);
 
-        void CreateOrder(Order order);
+        Task<Guid> CreateOrder(Order order);
 
         void UpdateOrder(Order order);
 

@@ -1,3 +1,4 @@
+using CoreApi.Application.Services;
 using CoreApi.Domain.Model;
 using CoreApi.Infrastructure;
 using CoreApi.Infrastructure.Database;
@@ -15,30 +16,19 @@ namespace CoreApi.External.Controllers
 
         private readonly AppSettingsService _appSettingsService;
 
-        public OrdersController(ILogger<OrdersController> logger, AppSettingsService appSettingsService)
+        private readonly IOrderService _orderService;
+
+        public OrdersController(ILogger<OrdersController> logger, AppSettingsService appSettingsService, IOrderService orderService)
         {
             _logger = logger;
             _appSettingsService = appSettingsService;
+            _orderService = orderService;
         }
 
         [HttpPost]
         public async Task<ActionResult<Guid>> PostAsync(Order order)
         {
-            using (var context = new OrderContext(_appSettingsService))
-            {
-                await context.Database.EnsureCreatedAsync();
-
-                Guid guid = Guid.NewGuid();
-
-                context.Add(
-                    new Order(guid, order.TrackingNumber, order.ShippingAddress));
-
-                await context.SaveChangesAsync();
-
-                _logger.LogInformation("Created Guid {name}!", guid);
-
-                return guid;
-            }
+            return await _orderService.CreateOrder(order);
         }
 
         [HttpGet]
