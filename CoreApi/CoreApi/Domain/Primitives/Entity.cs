@@ -3,13 +3,15 @@
 public abstract class Entity : IEquatable<Entity>
 {
 
+    protected Entity() { }
+
     protected Entity(Guid id)
     {
 
         Id = id;
     }
 
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     public static bool operator ==(Entity? left, Entity? right)
     {

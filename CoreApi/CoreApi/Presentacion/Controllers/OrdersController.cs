@@ -29,11 +29,7 @@ namespace CoreApi.External.Controllers
                 await context.Database.EnsureCreatedAsync();
 
                 context.Add(
-                    new Order(order.Id)
-                    {
-                        ShippingAddress = order.ShippingAddress,
-                        PartitionKey = order.Id.ToString()
-                    });
+                    new Order(Guid.NewGuid(), order.TrackingNumber, order.ShippingAddress));
 
                 await context.SaveChangesAsync();
             }
@@ -52,12 +48,12 @@ namespace CoreApi.External.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetByIdAsync(int id)
+        public async Task<ActionResult<Order>> GetByIdAsync(Guid id)
         {
             using (var context = new OrderContext(_appSettingsService))
             {
-                var order = await context.Orders.FindAsync(id, id.ToString());
-                if (order == null)
+                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+                if (order is null)
                 {
                     return NotFound();
                 }
@@ -66,12 +62,12 @@ namespace CoreApi.External.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             using (var context = new OrderContext(_appSettingsService))
             {
                 var order = await context.Orders.FindAsync(id, id.ToString());
-                if (order == null)
+                if (order is null)
                 {
                     return NotFound();
                 }
