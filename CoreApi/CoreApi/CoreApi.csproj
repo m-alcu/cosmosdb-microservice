@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Services\" />
     <Folder Include="Domain\DomainEvents\" />
     <Folder Include="Domain\ValueObjects\" />
   </ItemGroup>

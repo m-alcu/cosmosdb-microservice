@@ -22,16 +22,22 @@ namespace CoreApi.External.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(Order order)
+        public async Task<ActionResult<Guid>> PostAsync(Order order)
         {
             using (var context = new OrderContext(_appSettingsService))
             {
                 await context.Database.EnsureCreatedAsync();
 
+                Guid guid = Guid.NewGuid();
+
                 context.Add(
-                    new Order(Guid.NewGuid(), order.TrackingNumber, order.ShippingAddress));
+                    new Order(guid, order.TrackingNumber, order.ShippingAddress));
 
                 await context.SaveChangesAsync();
+
+                _logger.LogInformation("Created Guid {name}!", guid);
+
+                return guid;
             }
         }
 
