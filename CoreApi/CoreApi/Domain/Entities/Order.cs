@@ -1,4 +1,5 @@
 ﻿using CoreApi.Domain.Primitives;
+using System.Text.Json.Serialization;
 
 namespace CoreApi.Domain.Model;
 
@@ -12,7 +13,14 @@ public class Order : Entity
         ShippingAddress = shippingAddress;
     }
 
+    public void UpdateOrder(int? trackingNumber, StreetAddress shippingAddress)
+    {
+        TrackingNumber = trackingNumber;
+        ShippingAddress = shippingAddress;
+    }
+
     public int? TrackingNumber { get; private set; }
+    [JsonIgnore]
     public string PartitionKey { get; private set; }
     public StreetAddress ShippingAddress { get; private set; }
 }

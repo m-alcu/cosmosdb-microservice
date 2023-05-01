@@ -10,7 +10,7 @@ namespace CoreApi.Application.Services
 
         Task<Guid> CreateOrder(Order order);
 
-        void UpdateOrder(Order order);
+        Task<Order> UpdateOrder(Order order);
 
         Task<Order> DeleteOrder(Guid id);
 

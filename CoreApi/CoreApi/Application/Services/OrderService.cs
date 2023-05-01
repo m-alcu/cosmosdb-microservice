@@ -72,9 +72,24 @@ namespace CoreApi.Application.Services
             }
         }
 
-        public void UpdateOrder(Order order)
+        public async Task<Order> UpdateOrder(Order updatedOrder)
         {
-            throw new NotImplementedException();
+            using (var context = new OrderContext(_appSettingsService))
+            {
+                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
+
+                if (order == null)
+                {
+                    return null;
+                }
+
+                order.UpdateOrder(updatedOrder.TrackingNumber, updatedOrder.ShippingAddress);
+
+                context.Update(order);
+                await context.SaveChangesAsync();
+
+                return order;
+            }
         }
     }
 }

@@ -29,6 +29,13 @@ namespace CoreApi.External.Controllers
             return await _orderService.CreateOrder(order);
         }
 
+        [HttpPut]
+        public IActionResult Put(Order order)
+        {
+            _orderService.UpdateOrder(order);
+            return NoContent();
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetAllAsync()
         {
