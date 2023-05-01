@@ -66,7 +66,7 @@ namespace CoreApi.External.Controllers
         {
             using (var context = new OrderContext(_appSettingsService))
             {
-                var order = await context.Orders.FindAsync(id, id.ToString());
+                var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
                 if (order is null)
                 {
                     return NotFound();
