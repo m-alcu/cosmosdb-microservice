@@ -1,4 +1,4 @@
-﻿namespace CoreApi.Domain.Model;
+﻿namespace Domain.Orders;
 
 public class StreetAddress
 {

@@ -1,4 +1,4 @@
-﻿using CoreApi.Domain.Model;
+﻿using Domain.Orders;
 
 namespace CoreApi.Application.Services
 {

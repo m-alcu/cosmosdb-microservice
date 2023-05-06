@@ -1,6 +1,6 @@
 using CoreApi.Application.Services;
-using CoreApi.Domain.Model;
 using CoreApi.Infrastructure;
+using Domain.Orders;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreApi.External.Controllers

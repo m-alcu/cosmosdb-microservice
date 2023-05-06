@@ -1,7 +1,7 @@
 ﻿using CoreApi.Domain.Primitives;
 using System.Text.Json.Serialization;
 
-namespace CoreApi.Domain.Model;
+namespace Domain.Orders;
 
 public class Order : Entity
 {
