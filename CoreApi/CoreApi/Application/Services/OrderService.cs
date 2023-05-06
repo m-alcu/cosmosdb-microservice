@@ -1,5 +1,6 @@
 ﻿using CoreApi.Infrastructure;
 using CoreApi.Infrastructure.Database;
+using CoreApi.Infrastructure.Persistence;
 using Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,85 +11,74 @@ public class OrderService : IOrderService
 
     private readonly ILogger<OrderService> _logger;
     private readonly AppSettingsService _appSettingsService;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly ApplicationContext _context;
 
-    public OrderService(ILogger<OrderService> logger, AppSettingsService appSettingsService)
+    public OrderService(ILogger<OrderService> logger, AppSettingsService appSettingsService, IUnitOfWork unitOfWork, ApplicationContext context)
     {
         _logger = logger;
         _appSettingsService = appSettingsService;
+        _unitOfWork = unitOfWork;
+        _context = new ApplicationContext(_appSettingsService);
     }
 
     public async Task<Guid> CreateOrder(Order order)
     {
-        using (var context = new OrderContext(_appSettingsService))
-        {
-            await context.Database.EnsureCreatedAsync();
+        await _context.Database.EnsureCreatedAsync();
 
-            Guid guid = Guid.NewGuid();
+        Guid guid = Guid.NewGuid();
 
-            context.Add(
-                new Order(guid, order.TrackingNumber, order.ShippingAddress));
+        _context.Add(
+            new Order(guid, order.TrackingNumber, order.ShippingAddress));
 
-            await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            _logger.LogInformation("Created Guid {name}!", guid);
+        _logger.LogInformation("Created Guid {name}!", guid);
 
-            return guid;
-        }
+        return guid;
     }
 
     public async Task<Order> DeleteOrder(Guid id)
     {
-        using (var context = new OrderContext(_appSettingsService))
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+        if (order is null)
         {
-            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            if (order is null)
-            {
-                return order;
-            }
-
-            context.Orders.Remove(order);
-            await context.SaveChangesAsync();
-
             return order;
         }
+
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+
+        return order;
     }
 
     public async Task<IEnumerable<Order>> GetAllOrders()
     {
-        using (var context = new OrderContext(_appSettingsService))
-        {
-            await context.Database.EnsureCreatedAsync();
+        await _context.Database.EnsureCreatedAsync();
 
-            return await context.Orders.ToListAsync();
-
-        }
+        return await _context.Orders.ToListAsync();
     }
 
     public async Task<Order> GetOrderById(Guid id)
     {
-        using (var context = new OrderContext(_appSettingsService))
-        {
-            return await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-        }
+        return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
     }
 
     public async Task<Order> UpdateOrder(Order updatedOrder)
     {
-        using (var context = new OrderContext(_appSettingsService))
+
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
+
+        if (order == null)
         {
-            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
-
-            if (order == null)
-            {
-                return null;
-            }
-
-            order.UpdateOrder(updatedOrder.TrackingNumber, updatedOrder.ShippingAddress);
-
-            context.Update(order);
-            await context.SaveChangesAsync();
-
-            return order;
+            return null;
         }
+
+        order.UpdateOrder(updatedOrder.TrackingNumber, updatedOrder.ShippingAddress);
+
+        _context.Update(order);
+        await _context.SaveChangesAsync();
+
+        return order;
     }
 }

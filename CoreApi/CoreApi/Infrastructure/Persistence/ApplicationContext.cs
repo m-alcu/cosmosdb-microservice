@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreApi.Infrastructure.Database;
 
-public class OrderContext : DbContext
+public class ApplicationContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<Distributor> Distributors { get; set; }
 
     public AppSettingsService _appSettingsService;
 
-    public OrderContext(AppSettingsService appSettingsService)
+    public ApplicationContext(AppSettingsService appSettingsService)
     {
         _appSettingsService = appSettingsService;
     }
