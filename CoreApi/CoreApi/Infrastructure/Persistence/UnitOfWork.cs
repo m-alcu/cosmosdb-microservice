@@ -1,4 +1,5 @@
 ﻿using CoreApi.Application.Services;
+using CoreApi.Domain.Exceptions;
 using CoreApi.Infrastructure.Database;
 using Domain.Orders;
 using Microsoft.EntityFrameworkCore;
@@ -66,7 +67,7 @@ public sealed class UnitOfWork : IUnitOfWork
 
         if (order is null)
         {
-            return null;
+            throw new DomainException("Order " + updatedOrder.Id + " does not exist");
         }
 
         order.UpdateOrder(updatedOrder.TrackingNumber, updatedOrder.ShippingAddress);
