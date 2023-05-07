@@ -1,5 +1,4 @@
 using CoreApi.Application.Services;
-using CoreApi.Infrastructure;
 using Domain.Orders;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,14 +11,11 @@ namespace CoreApi.External.Controllers
 
         private readonly ILogger<OrdersController> _logger;
 
-        private readonly AppSettingsService _appSettingsService;
-
         private readonly IOrderService _orderService;
 
-        public OrdersController(ILogger<OrdersController> logger, AppSettingsService appSettingsService, IOrderService orderService)
+        public OrdersController(ILogger<OrdersController> logger, IOrderService orderService)
         {
             _logger = logger;
-            _appSettingsService = appSettingsService;
             _orderService = orderService;
         }
 

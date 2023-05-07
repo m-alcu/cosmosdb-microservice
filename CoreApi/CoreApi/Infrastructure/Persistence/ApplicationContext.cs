@@ -9,22 +9,10 @@ public class ApplicationContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<Distributor> Distributors { get; set; }
 
-    public AppSettingsService _appSettingsService;
-
-    public ApplicationContext(AppSettingsService appSettingsService)
+    public ApplicationContext(DbContextOptions<ApplicationContext> option) : base(option)
     {
-        _appSettingsService = appSettingsService;
-    }
 
-
-    #region Configuration
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        string accountEndpoint = _appSettingsService.AppSettings.EndpointUri;
-        string accountKey = _appSettingsService.AppSettings.PrimaryKey;
-        optionsBuilder.UseCosmos(accountEndpoint, accountKey, databaseName: "OrdersDB");
     }
-    #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
