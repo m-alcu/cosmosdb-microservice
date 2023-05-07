@@ -30,10 +30,9 @@ namespace CoreApi.External.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(Order order)
+        public async Task<ActionResult<Order>> Put(Order order)
         {
-            _orderService.UpdateOrder(order);
-            return NoContent();
+            return await _orderService.UpdateOrder(order);
         }
 
         [HttpGet]
