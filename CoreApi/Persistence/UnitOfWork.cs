@@ -3,6 +3,7 @@ using CoreApi.Domain.Exceptions;
 using CoreApi.Infrastructure.Database;
 using Domain.Orders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CoreApi.Infrastructure.Persistence;
 

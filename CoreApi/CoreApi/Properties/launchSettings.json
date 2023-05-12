@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "CoreApi": {
+    "Tradmia.App": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

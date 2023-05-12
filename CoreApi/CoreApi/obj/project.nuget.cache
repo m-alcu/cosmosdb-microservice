@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fj1zWkzb4J8mpOnlvzwbz0HEd80LbBCoJDox+5QhqWqIHX/qMaM5RTP4pwtQpcn/z72t5jKQ6hHxs+LwFVSsjA==",
+  "dgSpecHash": "wSSOICFJM6CzQSHLv0jpYagoRbLCXaRTT65Yf+gaoNa6GY+Zt/6JLuTTppV5UPwJRipwlXiH4txekIPrUT7q+w==",
   "success": true,
-  "projectFilePath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\CoreApi.csproj",
+  "projectFilePath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\Presentacion.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\malcubierre\\.nuget\\packages\\azure.core\\1.19.0\\azure.core.1.19.0.nupkg.sha512",
     "C:\\Users\\malcubierre\\.nuget\\packages\\microsoft.azure.cosmos\\3.30.1\\microsoft.azure.cosmos.3.30.1.nupkg.sha512",

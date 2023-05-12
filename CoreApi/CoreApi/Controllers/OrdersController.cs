@@ -2,7 +2,7 @@ using CoreApi.Application.Services;
 using Domain.Orders;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreApi.External.Controllers
+namespace Presentacion.Controllers
 {
     [ApiController]
     [Route("[controller]")]
