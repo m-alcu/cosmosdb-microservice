@@ -22,8 +22,9 @@ builder.Services.AddScoped<ApplicationContext>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var EndpointUri = "https://localhost:8081";
-var PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
+
+string EndpointUri = builder.Configuration.GetSection(key: "EndpointUri").Value;
+string PrimaryKey = builder.Configuration.GetSection(key: "PrimaryKey").Value;
 var dbName = "OrdersDB";
 
 builder.Services.AddDbContext<ApplicationContext>(option => option.UseCosmos(EndpointUri, PrimaryKey, databaseName: dbName));
