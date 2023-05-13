@@ -1,5 +1,5 @@
 ﻿
-using Domain.Orders;
+using Domain.Entities.Orders;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreApi.Infrastructure.Database;

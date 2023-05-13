@@ -1,5 +1,5 @@
 using CoreApi.Application.Services;
-using Domain.Orders;
+using Domain.Entities.Orders;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentacion.Controllers

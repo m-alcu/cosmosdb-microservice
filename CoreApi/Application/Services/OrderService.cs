@@ -1,5 +1,5 @@
 ﻿using CoreApi.Infrastructure.Persistence;
-using Domain.Orders;
+using Domain.Entities.Orders;
 
 namespace CoreApi.Application.Services;
 
