@@ -1,5 +1,7 @@
+using CoreApi.Application.Caching;
 using CoreApi.Application.Middlewares;
 using CoreApi.Application.Services;
+using CoreApi.Infrastructure.Caching;
 using CoreApi.Infrastructure.Database;
 using CoreApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,9 @@ builder.Services.AddScoped<ApplicationContext>();
 
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSingleton<ICacheService, CacheService>();
 
 
 string EndpointUri = builder.Configuration.GetSection(key: "EndpointUri").Value;

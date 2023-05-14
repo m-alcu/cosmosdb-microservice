@@ -2189,6 +2189,19 @@
           "bin/placeholder/Domain.dll": {}
         }
       },
+      "Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Persistence": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Infrastructure.dll": {}
+        }
+      },
       "Persistence/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -7119,6 +7132,11 @@
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
     },
+    "Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/Infrastructure.csproj"
+    },
     "Persistence/1.0.0": {
       "type": "project",
       "path": "../Persistence/Persistence.csproj",
@@ -7128,6 +7146,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Domain >= 1.0.0",
+      "Infrastructure >= 1.0.0",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.17.2",
       "Persistence >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
@@ -7139,9 +7158,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\Presentacion.csproj",
-      "projectName": "Presentacion",
-      "projectPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\Presentacion.csproj",
+      "projectUniqueName": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\App.csproj",
+      "projectName": "App",
+      "projectPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\App.csproj",
       "packagesPath": "C:\\Users\\malcubierre\\.nuget\\packages\\",
       "outputPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\obj\\",
       "projectStyle": "PackageReference",
@@ -7162,6 +7181,9 @@
           "projectReferences": {
             "C:\\proy\\vscode\\CoreApi\\CoreApi\\Domain\\Domain.csproj": {
               "projectPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\Domain\\Domain.csproj"
+            },
+            "C:\\proy\\vscode\\CoreApi\\CoreApi\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\Infrastructure\\Infrastructure.csproj"
             },
             "C:\\proy\\vscode\\CoreApi\\CoreApi\\Persistence\\Persistence.csproj": {
               "projectPath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\Persistence\\Persistence.csproj"
