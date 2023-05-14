@@ -24,7 +24,11 @@ builder.Services.AddScoped<ApplicationContext>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddDistributedMemoryCache();
+builder.Services.AddStackExchangeRedisCache(redisOptions =>
+{
+    string connection = builder.Configuration.GetConnectionString("Redis");
+    redisOptions.Configuration = connection;
+});
 builder.Services.AddSingleton<ICacheService, CacheService>();
 
 
