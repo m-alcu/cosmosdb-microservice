@@ -32,9 +32,9 @@ namespace Presentacion.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return Ok(await _orderService.GetAllOrders());
+            return Ok(await _orderService.GetAllOrders(cancellationToken));
         }
 
         [HttpGet("{id}")]

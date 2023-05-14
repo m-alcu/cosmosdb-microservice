@@ -49,11 +49,11 @@ public sealed class UnitOfWork : IUnitOfWork
         return order;
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrders()
+    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken)
     {
         await _context.Database.EnsureCreatedAsync();
 
-        return await _context.Orders.ToListAsync();
+        return await _context.Orders.ToListAsync(cancellationToken);
     }
 
     public async Task<Order> GetOrderById(Guid id)

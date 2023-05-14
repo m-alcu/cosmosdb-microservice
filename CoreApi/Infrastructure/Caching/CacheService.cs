@@ -11,6 +11,12 @@ public class CacheService : ICacheService
     private static readonly ConcurrentDictionary<string, bool> CacheKeys = new();
 
     private readonly IDistributedCache _distributedCache;
+
+    public CacheService(IDistributedCache distributedCache)
+    {
+        _distributedCache = distributedCache;
+    }
+
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default) where T : class
     {
         string? cachedValue = await _distributedCache.GetStringAsync(

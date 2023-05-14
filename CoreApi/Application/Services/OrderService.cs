@@ -1,4 +1,5 @@
-﻿using CoreApi.Infrastructure.Persistence;
+﻿using CoreApi.Application.Caching;
+using CoreApi.Infrastructure.Persistence;
 using Domain.Entities.Orders;
 
 namespace CoreApi.Application.Services;
@@ -7,10 +8,12 @@ public class OrderService : IOrderService
 {
 
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICacheService _cacheService;
 
-    public OrderService(IUnitOfWork unitOfWork)
+    public OrderService(IUnitOfWork unitOfWork, ICacheService cacheService)
     {
         _unitOfWork = unitOfWork;
+        _cacheService = cacheService;
     }
 
     public async Task<Guid> CreateOrder(Order order)
@@ -23,9 +26,22 @@ public class OrderService : IOrderService
         return await _unitOfWork.DeleteOrder(id);
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrders()
+    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken)
     {
-        return await _unitOfWork.GetAllOrders();
+
+        IEnumerable<Order>? orders = await _cacheService.GetAsync<IEnumerable<Order>>("orders", cancellationToken);
+
+        if (orders is not null)
+        {
+
+            return orders;
+        }
+
+        orders = await _unitOfWork.GetAllOrders(cancellationToken);
+
+        await _cacheService.SetAsync("orders", orders, cancellationToken);
+
+        return orders;
     }
 
     public async Task<Order> GetOrderById(Guid id)
