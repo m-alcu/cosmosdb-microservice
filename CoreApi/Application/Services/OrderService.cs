@@ -26,21 +26,7 @@ public class OrderService : IOrderService
         return await _unitOfWork.DeleteOrder(id);
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken) =>
-
-        //IEnumerable<Order>? orders = await _cacheService.GetAsync<IEnumerable<Order>>("orders", cancellationToken);
-
-        //if (orders is not null)
-        //{
-
-        //    return orders;
-        //}
-
-        //orders = await _unitOfWork.GetAllOrders(cancellationToken);
-
-        //await _cacheService.SetAsync("orders", orders, cancellationToken);
-
-        //return orders;
+    public async Task<IEnumerable<Order>?> GetAllOrders(CancellationToken cancellationToken) =>
 
         await _cacheService.GetAsync(
             "orders",

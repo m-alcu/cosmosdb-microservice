@@ -4,7 +4,7 @@ namespace CoreApi.Application.Services;
 
 public interface IOrderService
 {
-    Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken);
+    Task<IEnumerable<Order>?> GetAllOrders(CancellationToken cancellationToken);
 
     Task<Order> GetOrderById(Guid id);
 
