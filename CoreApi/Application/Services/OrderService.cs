@@ -26,23 +26,30 @@ public class OrderService : IOrderService
         return await _unitOfWork.DeleteOrder(id);
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken)
-    {
+    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken) =>
 
-        IEnumerable<Order>? orders = await _cacheService.GetAsync<IEnumerable<Order>>("orders", cancellationToken);
+        //IEnumerable<Order>? orders = await _cacheService.GetAsync<IEnumerable<Order>>("orders", cancellationToken);
 
-        if (orders is not null)
-        {
+        //if (orders is not null)
+        //{
 
-            return orders;
-        }
+        //    return orders;
+        //}
 
-        orders = await _unitOfWork.GetAllOrders(cancellationToken);
+        //orders = await _unitOfWork.GetAllOrders(cancellationToken);
 
-        await _cacheService.SetAsync("orders", orders, cancellationToken);
+        //await _cacheService.SetAsync("orders", orders, cancellationToken);
 
-        return orders;
-    }
+        //return orders;
+
+        await _cacheService.GetAsync(
+            "orders",
+            async () =>
+            {
+                IEnumerable<Order>? orders = await _unitOfWork.GetAllOrders(cancellationToken);
+                return orders;
+            },
+            cancellationToken);
 
     public async Task<Order> GetOrderById(Guid id)
     {

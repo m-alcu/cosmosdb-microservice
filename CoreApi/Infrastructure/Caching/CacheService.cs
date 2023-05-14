@@ -33,6 +33,22 @@ public class CacheService : ICacheService
         return value;
     }
 
+    public async Task<T> GetAsync<T>(string key, Func<Task<T>> factory, CancellationToken cancellationToken = default) where T : class
+    {
+        T? cachedValue = await GetAsync<T>(key, cancellationToken);
+
+        if (cachedValue is not null)
+        {
+            return cachedValue;
+        }
+
+        cachedValue = await factory();
+
+        await SetAsync(key, cachedValue, cancellationToken);
+
+        return cachedValue;
+    }
+
     public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
 
