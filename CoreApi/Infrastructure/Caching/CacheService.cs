@@ -34,9 +34,13 @@ public class CacheService : ICacheService
                 return result;
             }
 
+            var cacheEntryOptions = new DistributedCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
+
             await _distributedCache.SetStringAsync(
                 key,
                 JsonConvert.SerializeObject(result),
+                cacheEntryOptions,
                 cancellationToken);
 
             return result;
