@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Orders;
-
-namespace Domain.UnitTests.Orders;
+﻿namespace Domain.UnitTests.Orders;
 
 public class SkuTests
 {

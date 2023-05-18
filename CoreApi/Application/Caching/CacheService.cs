@@ -1,14 +1,11 @@
 ﻿using CoreApi.Application.Caching;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using System.Collections.Concurrent;
 
 namespace CoreApi.Infrastructure.Caching;
 
 public class CacheService : ICacheService
 {
-
-    private static readonly ConcurrentDictionary<string, bool> CacheKeys = new();
 
     private readonly IDistributedCache _distributedCache;
 

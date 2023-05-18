@@ -3,7 +3,10 @@
 public abstract class Entity : IEquatable<Entity>
 {
 
-    protected Entity() { }
+    protected Entity()
+    {
+        Id = Guid.NewGuid();
+    }
 
     protected Entity(Guid id)
     {

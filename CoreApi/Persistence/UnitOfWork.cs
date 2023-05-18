@@ -1,7 +1,7 @@
-﻿using CoreApi.Application.Services;
+﻿using Application.Data.Employees;
 using CoreApi.Domain.Exceptions;
 using CoreApi.Infrastructure.Database;
-using Domain.Entities.Orders;
+using Domain.Entities.Employees;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -9,24 +9,25 @@ namespace CoreApi.Infrastructure.Persistence;
 
 public sealed class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationContext _context;
-    private readonly ILogger<OrderService> _logger;
+    private readonly AppDbContext _context;
+    private readonly ILogger<EmployeeService> _logger;
 
-    public UnitOfWork(ILogger<OrderService> logger, ApplicationContext context)
+    public UnitOfWork(ILogger<EmployeeService> logger, AppDbContext context)
     {
         _logger = logger;
         _context = context;
     }
 
 
-    public async Task<Guid> CreateOrder(Order order)
+
+    public async Task<Guid> CreateEmployee(Employee employee)
     {
         await _context.Database.EnsureCreatedAsync();
 
         Guid guid = Guid.NewGuid();
 
         _context.Add(
-            new Order(guid, order.TrackingNumber, order.ShippingAddress));
+            new Employee(guid, employee.TenantId, employee.Name, employee.Surname, employee.Email, employee.Dni));
 
         await _context.SaveChangesAsync();
 
@@ -35,53 +36,50 @@ public sealed class UnitOfWork : IUnitOfWork
         return guid;
     }
 
-    public async Task<Order> DeleteOrder(Guid id)
+    public async Task<Employee?> DeleteEmployee(Guid id)
     {
-        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-        if (order is null)
+        var employee = await _context.Employees.FirstOrDefaultAsync(o => o.Id == id);
+        if (employee is null)
         {
-            return order;
+            return employee;
         }
 
-        _context.Orders.Remove(order);
+        _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
 
-        return order;
+        return employee;
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrders(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Employee>> GetAllEmployees(CancellationToken cancellationToken)
     {
         await _context.Database.EnsureCreatedAsync();
 
-        return await _context.Orders.ToListAsync(cancellationToken);
+        return await _context.Employees.ToListAsync(cancellationToken);
     }
 
-    public async Task<Order> GetOrderById(Guid id)
+    public async Task<Employee?> GetEmployeeById(Guid id)
     {
-        return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+        return await _context.Employees.FirstOrDefaultAsync(o => o.Id == id);
     }
 
-    public async Task<Order> UpdateOrder(Order updatedOrder)
+    public async Task<Employee> UpdateEmployee(Employee updatedEmployee)
     {
+        var employee = await _context.Employees.FirstOrDefaultAsync(o => o.Id == updatedEmployee.Id);
 
-        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
-
-        if (order is null)
+        if (employee is null)
         {
-            throw new DomainException("Order " + updatedOrder.Id + " does not exist");
+            throw new DomainException("Employee " + updatedEmployee.Id + " does not exist");
         }
 
-        order.UpdateOrder(updatedOrder.TrackingNumber, updatedOrder.ShippingAddress);
+        employee.UpdateEmployee(updatedEmployee.TenantId, updatedEmployee.Name, updatedEmployee.Surname, updatedEmployee.Email, updatedEmployee.Dni);
 
-        _context.Update(order);
+        _context.Update(employee);
         await _context.SaveChangesAsync();
 
-        return order;
+        return employee;
     }
-
     public Task SaveChangesAsync()
     {
         return _context.SaveChangesAsync();
     }
-
 }
