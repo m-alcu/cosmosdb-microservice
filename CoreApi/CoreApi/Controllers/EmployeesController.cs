@@ -43,7 +43,7 @@ namespace Presentacion.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return Ok(await _employeeAppService.GetAsync());
+            return Ok(await _employeeAppService.GetAsync(cancellationToken));
         }
 
         [HttpGet("{id}")]

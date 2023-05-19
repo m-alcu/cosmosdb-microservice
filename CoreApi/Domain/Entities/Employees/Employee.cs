@@ -26,6 +26,7 @@ public class Employee : Entity
         Dni = dni;
     }
 
+
     public string TenantId { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }

@@ -11,7 +11,7 @@ public interface IEmployeeAppService
     /// Gets a collection of employees.
     /// </summary>
     /// <returns>List of <see cref="EmployeeDto"/></returns>
-    Task<List<EmployeeDto>> GetAsync();
+    Task<List<EmployeeDto>> GetAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the employee with the specified 'id'.

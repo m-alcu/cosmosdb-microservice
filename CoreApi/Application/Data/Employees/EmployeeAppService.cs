@@ -1,5 +1,6 @@
 using Application.Data.Employees.Dto;
 using AutoMapper;
+using CoreApi.Application.Caching;
 using CoreApi.Application.Exceptions;
 using CoreApi.Infrastructure.Database;
 using Domain.Entities.Employees;
@@ -14,6 +15,7 @@ public class EmployeeAppService : IEmployeeAppService
 {
     private readonly AppDbContext _appDbContext;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
     private readonly DbSet<Employee> _employees;
 
@@ -22,20 +24,30 @@ public class EmployeeAppService : IEmployeeAppService
     /// </summary>
     /// <param name="appDbContext"><see cref="AppDbContext"/></param>
     /// <param name="mapper"><see cref="IMapper"/></param>
-    public EmployeeAppService(AppDbContext appDbContext, IMapper mapper)
+    public EmployeeAppService(AppDbContext appDbContext, IMapper mapper, ICacheService cacheService)
     {
         _appDbContext = appDbContext;
         _mapper = mapper;
         _employees = appDbContext.Set<Employee>();
+        _cacheService = cacheService;
     }
 
 
     /// <inheritdoc cref="IEmployeeAppService"/>
-    public async Task<List<EmployeeDto>> GetAsync()
+    public async Task<List<EmployeeDto>> GetAsync(CancellationToken cancellationToken)
     {
         await _appDbContext.Database.EnsureCreatedAsync();
 
-        List<Employee> employees = await _employees.ToListAsync();
+        IEnumerable<Employee>? employees = await _cacheService.GetAsync(
+            "employees",
+            async () =>
+            {
+                IEnumerable<Employee>? employees = await _employees.ToListAsync();
+                return employees;
+            },
+            cancellationToken);
+
+
         return _mapper.Map<List<EmployeeDto>>(employees);
     }
 

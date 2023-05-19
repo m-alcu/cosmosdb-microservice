@@ -5,7 +5,7 @@ public abstract class Entity : IEquatable<Entity>
 
     protected Entity()
     {
-        Id = Guid.NewGuid();
+
     }
 
     protected Entity(Guid id)
@@ -14,7 +14,7 @@ public abstract class Entity : IEquatable<Entity>
         Id = id;
     }
 
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
 
     public static bool operator ==(Entity? left, Entity? right)
     {
