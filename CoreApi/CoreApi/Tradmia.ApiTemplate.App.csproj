@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Application\Tradmia.ApiTemplate.Application.csproj" />
+    <ProjectReference Include="..\Domain\Tradmia.ApiTemplate.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Tradmia.ApiTemplate.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

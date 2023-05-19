@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Employees;
+﻿using Tradmia.ApiTemplate.Domain.Entities.Employees;
 
-namespace Domain.UnitTests.Employees;
+namespace Tradmia.ApiTemplate.UnitTests.Employees;
 
 public class EmployeeTests
 {

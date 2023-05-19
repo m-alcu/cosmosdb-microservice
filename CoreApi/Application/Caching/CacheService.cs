@@ -1,8 +1,7 @@
-﻿using CoreApi.Application.Caching;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace CoreApi.Infrastructure.Caching;
+namespace Tradmia.ApiTemplate.Application.Caching;
 
 public class CacheService : ICacheService
 {

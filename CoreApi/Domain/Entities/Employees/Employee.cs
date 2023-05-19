@@ -1,6 +1,6 @@
-﻿using CoreApi.Domain.Primitives;
+﻿using Tradmia.ApiTemplate.Domain.Primitives;
 
-namespace Domain.Entities.Employees;
+namespace Tradmia.ApiTemplate.Domain.Entities.Employees;
 public class Employee : Entity
 {
     public Employee() : base()

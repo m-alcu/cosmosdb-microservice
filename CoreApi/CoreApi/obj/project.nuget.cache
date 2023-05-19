@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6IDgWX1aR1Ro8IqgANV4GFeLL1d2WB8aCvlX9pt4G+kg+gv8aH2vuiM9aqUYSKK1D+ri3DI4t01Be7Z0vo6eOA==",
+  "dgSpecHash": "PgnijK6XI24VJ60BIpRwo8J2Vs+OMMZPokqb8MVIkuTS28VRSdPemFg9EIG+WHw/GVg3VHMR7B3TRWa5BGlXHg==",
   "success": true,
-  "projectFilePath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\App.csproj",
+  "projectFilePath": "C:\\proy\\vscode\\CoreApi\\CoreApi\\CoreApi\\Tradmia.ApiTemplate.App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\malcubierre\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\malcubierre\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

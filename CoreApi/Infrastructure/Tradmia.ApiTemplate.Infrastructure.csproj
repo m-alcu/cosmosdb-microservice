@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Domain\Tradmia.ApiTemplate.Domain.csproj" />
   </ItemGroup>
 
 </Project>

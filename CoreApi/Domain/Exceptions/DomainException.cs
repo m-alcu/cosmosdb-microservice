@@ -1,4 +1,4 @@
-﻿namespace CoreApi.Domain.Exceptions
+﻿namespace Tradmia.ApiTemplate.Domain.Exceptions
 
 {
     public sealed class DomainException : Exception

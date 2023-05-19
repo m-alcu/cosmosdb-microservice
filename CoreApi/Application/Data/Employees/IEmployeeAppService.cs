@@ -1,4 +1,4 @@
-using Application.Data.Employees.Dto;
+using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 
 namespace Application.Data.Employees;
 

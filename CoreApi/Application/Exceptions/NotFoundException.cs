@@ -1,4 +1,4 @@
-﻿namespace CoreApi.Application.Exceptions
+﻿namespace Tradmia.ApiTemplate.Application.Exceptions
 
 {
     public sealed class NotFoundException : Exception

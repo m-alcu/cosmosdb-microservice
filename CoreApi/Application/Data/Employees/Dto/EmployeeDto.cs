@@ -1,4 +1,4 @@
-namespace Application.Data.Employees.Dto;
+namespace Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 
 /// <summary>
 /// Employee dto
@@ -13,7 +13,7 @@ public class EmployeeDto
     /// <summary>
     /// Employee's id
     /// </summary>
-    public String? TenantId { get; set; }
+    public string? TenantId { get; set; }
 
     /// <summary>
     /// Employee's name

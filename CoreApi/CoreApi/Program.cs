@@ -1,10 +1,10 @@
 using Application.Data.Employees;
-using CoreApi.Application.Caching;
-using CoreApi.Application.Middlewares;
-using CoreApi.Infrastructure.Caching;
-using CoreApi.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Tradmia.Ciutada.Application;
+using Tradmia.ApiTemplate.App.Middlewares;
+using Tradmia.ApiTemplate.Application;
+using Tradmia.ApiTemplate.Application.Caching;
+using Tradmia.ApiTemplate.Application.Data.Employees;
+using Tradmia.ApiTemplate.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

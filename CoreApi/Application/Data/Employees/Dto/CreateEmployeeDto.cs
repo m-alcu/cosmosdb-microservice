@@ -1,4 +1,4 @@
-namespace Application.Data.Employees.Dto;
+namespace Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 
 /// <summary>
 /// Employee dto

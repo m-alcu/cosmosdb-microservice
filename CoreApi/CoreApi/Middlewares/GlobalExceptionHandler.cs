@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace CoreApi.Application.Middlewares;
+namespace Tradmia.ApiTemplate.App.Middlewares;
 
 public class GlobalExceptionHandler : IMiddleware
 {

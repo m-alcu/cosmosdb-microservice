@@ -1,4 +1,4 @@
-﻿namespace CoreApi.Domain.Primitives;
+﻿namespace Tradmia.ApiTemplate.Domain.Primitives;
 
 public abstract class Entity : IEquatable<Entity>
 {

@@ -1,7 +1,7 @@
-using Application.Data.Employees.Dto;
 using FluentValidation;
+using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 
-namespace Tradmia.Ciutada.Api.Application.Validations;
+namespace Tradmia.ApiTemplate.App.Validations;
 
 /// <summary>
 /// CreateEmployeeDto validator

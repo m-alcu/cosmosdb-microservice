@@ -1,9 +1,9 @@
 using Application.Data.Employees;
-using Application.Data.Employees.Dto;
-using Domain.Entities.Employees;
 using Microsoft.AspNetCore.Mvc;
+using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
+using Tradmia.ApiTemplate.Domain.Entities.Employees;
 
-namespace Presentacion.Controllers
+namespace Tradmia.ApiTemplate.App.Controllers
 {
     [ApiController]
     [Route("[controller]")]

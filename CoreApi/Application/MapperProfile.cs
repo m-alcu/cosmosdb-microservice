@@ -1,9 +1,9 @@
-using Application.Data.Employees.Dto;
 using AutoMapper;
-using Domain.Entities.Employees;
 using System.Diagnostics.CodeAnalysis;
+using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
+using Tradmia.ApiTemplate.Domain.Entities.Employees;
 
-namespace Tradmia.Ciutada.Application;
+namespace Tradmia.ApiTemplate.Application;
 
 /// <summary>
 /// Mapper Profile

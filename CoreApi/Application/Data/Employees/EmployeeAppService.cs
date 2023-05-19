@@ -1,12 +1,13 @@
-using Application.Data.Employees.Dto;
+using Application.Data.Employees;
 using AutoMapper;
-using CoreApi.Application.Caching;
-using CoreApi.Application.Exceptions;
-using CoreApi.Infrastructure.Database;
-using Domain.Entities.Employees;
 using Microsoft.EntityFrameworkCore;
+using Tradmia.ApiTemplate.Application.Caching;
+using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
+using Tradmia.ApiTemplate.Application.Exceptions;
+using Tradmia.ApiTemplate.Domain.Entities.Employees;
+using Tradmia.ApiTemplate.Infrastructure;
 
-namespace Application.Data.Employees;
+namespace Tradmia.ApiTemplate.Application.Data.Employees;
 
 /// <summary>
 /// Employee app service implementation

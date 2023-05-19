@@ -1,9 +1,9 @@
-﻿
-using Domain.Entities.Employees;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
+using Tradmia.ApiTemplate.Domain.Entities.Employees;
+using Tradmia.ApiTemplate.Infrastructure.Data;
 
-namespace CoreApi.Infrastructure.Database;
+namespace Tradmia.ApiTemplate.Infrastructure;
 
 [ExcludeFromCodeCoverage]
 public class AppDbContext : DbContext
