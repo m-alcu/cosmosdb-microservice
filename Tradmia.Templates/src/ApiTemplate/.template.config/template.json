@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "INETUM",
+  "classifications": [
+    "Web",
+    "WebAPI"
+  ],
+  "identity": "Tradmia.WebApi",
+  "name": "TRADMIA ASP.NET Core Web API",
+  "shortName": "tradmiawebapi",
+  "defaultName": "MyProject",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ApiTemplate",
+  "preferNameDirectory": true,
+  "symbols": {
+  },
+  "sources": []
+    }
+  ]
+}
