@@ -1,11 +1,12 @@
 using Application.Data.Employees;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Tradmia.ApiTemplate.Application.Caching;
 using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 using Tradmia.ApiTemplate.Application.Exceptions;
 using Tradmia.ApiTemplate.Domain.Entities.Employees;
 using Tradmia.ApiTemplate.Infrastructure;
+using Tradmia.ApiTemplate.Infrastructure.Caching;
+using Tradmia.ApiTemplate.Infrastructure.Events;
 
 namespace Tradmia.ApiTemplate.Application.Data.Employees;
 
@@ -17,6 +18,7 @@ public class EmployeeAppService : IEmployeeAppService
     private readonly AppDbContext _appDbContext;
     private readonly IMapper _mapper;
     private readonly ICacheService _cacheService;
+    private readonly IEventPublisher _eventPublisher;
 
     private readonly DbSet<Employee> _employees;
 
@@ -25,12 +27,13 @@ public class EmployeeAppService : IEmployeeAppService
     /// </summary>
     /// <param name="appDbContext"><see cref="AppDbContext"/></param>
     /// <param name="mapper"><see cref="IMapper"/></param>
-    public EmployeeAppService(AppDbContext appDbContext, IMapper mapper, ICacheService cacheService)
+    public EmployeeAppService(AppDbContext appDbContext, IMapper mapper, ICacheService cacheService, IEventPublisher eventPublisher)
     {
         _appDbContext = appDbContext;
         _mapper = mapper;
         _employees = appDbContext.Set<Employee>();
         _cacheService = cacheService;
+        _eventPublisher = eventPublisher;
     }
 
 
@@ -104,4 +107,10 @@ public class EmployeeAppService : IEmployeeAppService
         _ = await _appDbContext.SaveChangesAsync();
     }
 
+    public async Task Publish(string data)
+    {
+        string eventType = "MyEvent";
+        string subject = "/myapp/myservice";
+        await _eventPublisher.PublishEvent(eventType, subject, new BinaryData(data));
+    }
 }

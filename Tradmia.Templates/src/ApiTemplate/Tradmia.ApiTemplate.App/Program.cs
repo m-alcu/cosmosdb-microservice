@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tradmia.ApiTemplate.App.Middlewares;
 using Tradmia.ApiTemplate.Application;
-using Tradmia.ApiTemplate.Application.Caching;
 using Tradmia.ApiTemplate.Application.Data.Employees;
 using Tradmia.ApiTemplate.Infrastructure;
+using Tradmia.ApiTemplate.Infrastructure.Caching;
+using Tradmia.ApiTemplate.Infrastructure.Events;
 using Tradmia.Ciutada.Api.Extensions;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
@@ -40,16 +41,24 @@ builder.Services.AddScoped<AppDbContext>();
 
 builder.Services.AddScoped<IEmployeeAppService, EmployeeAppService>();
 
+var configuration = builder.Configuration;
+
 builder.Services.AddStackExchangeRedisCache(redisOptions =>
 {
-    string connection = builder.Configuration.GetConnectionString("Redis");
+    string connection = configuration.GetConnectionString("Redis");
     redisOptions.Configuration = connection;
 });
 builder.Services.AddSingleton<ICacheService, CacheService>();
 
+builder.Services.AddSingleton<IEventPublisher>(sp =>
+    new EventGridPublisherService(
+        configuration.GetValue<string>("EventGrid:Endpoint"),
+        configuration.GetValue<string>("EventGrid:Key")
+    )
+);
 
-string EndpointUri = builder.Configuration.GetSection(key: "EndpointUri").Value;
-string PrimaryKey = builder.Configuration.GetSection(key: "PrimaryKey").Value;
+string EndpointUri = configuration.GetSection(key: "EndpointUri").Value;
+string PrimaryKey = configuration.GetSection(key: "PrimaryKey").Value;
 var dbName = "EmployeeDB";
 
 builder.Services.AddDbContext<AppDbContext>(option => option.UseCosmos(EndpointUri, PrimaryKey, databaseName: dbName));

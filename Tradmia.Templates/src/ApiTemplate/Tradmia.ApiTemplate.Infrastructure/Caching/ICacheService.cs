@@ -1,4 +1,4 @@
-﻿namespace Tradmia.ApiTemplate.Application.Caching
+﻿namespace Tradmia.ApiTemplate.Infrastructure.Caching
 {
     public interface ICacheService
     {

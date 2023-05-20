@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace Tradmia.ApiTemplate.Application.Caching;
+namespace Tradmia.ApiTemplate.Infrastructure.Caching;
 
 public class CacheService : ICacheService
 {

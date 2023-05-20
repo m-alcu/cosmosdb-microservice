@@ -44,4 +44,7 @@ public interface IEmployeeAppService
     /// </summary>
     /// <param name="id"></param>
     Task DeleteAsync(Guid id);
+
+
+    Task Publish(string data);
 }

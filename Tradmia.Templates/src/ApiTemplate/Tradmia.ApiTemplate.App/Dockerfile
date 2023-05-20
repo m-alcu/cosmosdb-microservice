@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CoreApi/CoreApi.csproj", "CoreApi/"]
-RUN dotnet restore "CoreApi/CoreApi.csproj"
+COPY ["Tradmia.ApiTemplate.App/Tradmia.ApiTemplate.App.csproj", "Tradmia.ApiTemplate.App/"]
+RUN dotnet restore "Tradmia.ApiTemplate.App/Tradmia.ApiTemplate.App.csproj"
 COPY . .
-WORKDIR "/src/CoreApi"
-RUN dotnet build "CoreApi.csproj" -c Release -o /app/build
+WORKDIR "/src/Tradmia.ApiTemplate.App"
+RUN dotnet build "Tradmia.ApiTemplate.App.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CoreApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Tradmia.ApiTemplate.App.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CoreApi.dll"]
+ENTRYPOINT ["dotnet", "Tradmia.ApiTemplate.App.dll"]
