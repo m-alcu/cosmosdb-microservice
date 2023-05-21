@@ -11,15 +11,15 @@ variable "st-location" {
 }
 
 variable "asp-rg-name" {
-  default = "juno-asp-rg-qa"
+  default = "tradmia-asp-rg-qa"
 }
 
 variable "asp-name" {
-  default = "juno-asp-linux-dynamic"
+  default = "tradmia-asp-linux-dynamic"
 }
 
 variable "rg-name" {
-  default = "junoApiTemplatepany-rg-dynamic"
+  default = "tradmiaApiTemplatepany-rg-dynamic"
 }
 
 variable "app-name" {
@@ -39,9 +39,9 @@ variable "app_settings" {
 
   default = {
     "ASPNETCORE_ENVIRONMENT"                = "Dynamic"
-    "DOCKER_REGISTRY_SERVER_URL"            = "https://junocr.azurecr.io/"
-    "DOCKER_REGISTRY_SERVER_USERNAME"       = "junocr"
-    "DOCKER_REGISTRY_SERVER_PASSWORD"       = "@Microsoft.KeyVault(SecretUri=https://juno-kv-qa.vault.azure.net/secrets/DOCKER-REGISTRY-SERVER-PASSWORD/cff16c70515d426fadc4c14c3f221a79)"
+    "DOCKER_REGISTRY_SERVER_URL"            = "https://tradmiacr.azurecr.io/"
+    "DOCKER_REGISTRY_SERVER_USERNAME"       = "tradmiacr"
+    "DOCKER_REGISTRY_SERVER_PASSWORD"       = "@Microsoft.KeyVault(SecretUri=https://tradmia-kv-qa.vault.azure.net/secrets/DOCKER-REGISTRY-SERVER-PASSWORD/cff16c70515d426fadc4c14c3f221a79)"
   }
 }
 

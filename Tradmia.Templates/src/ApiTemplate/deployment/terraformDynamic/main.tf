@@ -14,8 +14,8 @@ terraform {
   required_version = ">= 0.14.9"
 
   backend "azurerm" {
-    resource_group_name  = "junoApiTemplate-rg-dynamic"
-    storage_account_name = "junoApiTemplatetfstdynamic"
+    resource_group_name  = "tradmiaApiTemplate-rg-dynamic"
+    storage_account_name = "tradmiaApiTemplatetfstdynamic"
     container_name       = "tfstate"
     key                  = VERSIONNAME
   }

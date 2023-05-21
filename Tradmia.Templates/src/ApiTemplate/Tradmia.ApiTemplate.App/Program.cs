@@ -1,19 +1,29 @@
 using Application.Data.Employees;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Tradmia.ApiTemplate.App.Extensions;
 using Tradmia.ApiTemplate.App.Middlewares;
 using Tradmia.ApiTemplate.Application;
 using Tradmia.ApiTemplate.Application.Data.Employees;
 using Tradmia.ApiTemplate.Infrastructure;
 using Tradmia.ApiTemplate.Infrastructure.Caching;
 using Tradmia.ApiTemplate.Infrastructure.Events;
-using Tradmia.Ciutada.Api.Extensions;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
 const string CorsPolicy = nameof(CorsPolicy);
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    string connectionString = builder.Configuration.GetConnectionString("AppConfig");
+    options.Connect(connectionString);
+});
+
+builder.Services.AddAzureAppConfiguration();
+
+string connection = builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:Redis:Endpoint"];
 
 // Add services to the container.
 
@@ -41,27 +51,29 @@ builder.Services.AddScoped<AppDbContext>();
 
 builder.Services.AddScoped<IEmployeeAppService, EmployeeAppService>();
 
-var configuration = builder.Configuration;
+
 
 builder.Services.AddStackExchangeRedisCache(redisOptions =>
 {
-    string connection = configuration.GetConnectionString("Redis");
+    string connection = builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:Redis:Endpoint"];
     redisOptions.Configuration = connection;
 });
 builder.Services.AddSingleton<ICacheService, CacheService>();
 
 builder.Services.AddSingleton<IEventPublisher>(sp =>
     new EventGridPublisherService(
-        configuration.GetValue<string>("EventGrid:Endpoint"),
-        configuration.GetValue<string>("EventGrid:Key")
+        builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:EventGrid:Endpoint"],
+        builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:EventGrid:Key"]
     )
 );
 
-string EndpointUri = configuration.GetSection(key: "EndpointUri").Value;
-string PrimaryKey = configuration.GetSection(key: "PrimaryKey").Value;
-var dbName = "EmployeeDB";
-
-builder.Services.AddDbContext<AppDbContext>(option => option.UseCosmos(EndpointUri, PrimaryKey, databaseName: dbName));
+builder.Services.AddDbContext<AppDbContext>(option =>
+    option.UseCosmos(
+        builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:CosmosDb:Endpoint"],
+        builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:CosmosDb:Key"],
+        builder.Configuration["ca-tradmia-ApiTemplate-westeu-001:CosmosDb:Database"]
+        )
+);
 
 var app = builder.Build();
 
@@ -74,6 +86,8 @@ _ = app.UseSwaggerUI(options =>
     options.DisplayRequestDuration();
 });
 
+app.UseAzureAppConfiguration();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -81,6 +95,8 @@ if (app.Environment.IsDevelopment())
     _ = app.UseCors(t => t.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
     _ = app.UseHttpLogging();
 }
+
+
 
 app.UseHttpsRedirection()
     .UseRouting()

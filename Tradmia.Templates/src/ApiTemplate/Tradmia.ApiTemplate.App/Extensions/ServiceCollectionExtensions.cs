@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Tradmia.ApiTemplate.App.Validations;
 using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 
-namespace Tradmia.Ciutada.Api.Extensions;
+namespace Tradmia.ApiTemplate.App.Extensions;
 
 /// <summary>
 /// Extensions for <see cref="IServiceCollection"/>
