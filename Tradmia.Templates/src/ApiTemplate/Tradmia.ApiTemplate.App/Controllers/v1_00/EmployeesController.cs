@@ -2,13 +2,15 @@ using Application.Data.Employees;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
+using Tradmia.ApiTemplate.App.ActionFilters;
 using Tradmia.ApiTemplate.Application.Data.Employees.Dto;
 using Tradmia.ApiTemplate.Domain.Entities.Employees;
 
-namespace Tradmia.ApiTemplate.App.Controllers;
+namespace Tradmia.ApiTemplate.App.Controllers.v1_00;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1_00/[controller]")]
 public class EmployeesController : ControllerBase
 {
 
@@ -22,13 +24,40 @@ public class EmployeesController : ControllerBase
         _employeeAppService = employeeAppService;
     }
 
+    /// <summary>
+    /// Returns an Allow HTTP header with the allowed HTTP methods.
+    /// </summary>
+    /// <returns>A 200 OK response.</returns>
+    [HttpOptions]
+    public IActionResult Options()
+    {
+        HttpContext.Response.Headers.AppendCommaSeparatedValues(
+            HeaderNames.Allow,
+            HttpMethods.Get,
+            HttpMethods.Head,
+            HttpMethods.Options,
+            HttpMethods.Post);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Creates a new employee.
+    /// </summary>
+    /// <param name="employee">The employee to create.</param>
+    /// <returns>A 201 Created response containing the newly created employee or a 400 Bad Request if the employee is
+    /// invalid.</returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesDefaultResponseType]
+    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<Guid>> PostAsync(CreateEmployeeDto employee)
     {
-        return await _employeeAppService.CreateAsync(employee);
+        Guid result = await _employeeAppService.CreateAsync(employee);
+        return Created("api/v1_00/" + result.ToString(), result);
     }
 
     [HttpPut]
+    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> Put(EmployeeDto employee)
     {
         await _employeeAppService.UpdateAsync(employee);
@@ -36,6 +65,7 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPatch]
+    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> Patch(UpdateEmployeeDto employee)
     {
         await _employeeAppService.PatchAsync(employee);
@@ -43,12 +73,14 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpGet]
+    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAllAsync(CancellationToken cancellationToken)
     {
         return Ok(await _employeeAppService.GetAsync(cancellationToken));
     }
 
     [HttpGet("{id}")]
+    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<Employee>> GetByIdAsync(Guid id)
     {
         var employee = await _employeeAppService.GetByIdAsync(id);
@@ -60,6 +92,7 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         await _employeeAppService.DeleteAsync(id);
@@ -68,6 +101,7 @@ public class EmployeesController : ControllerBase
 
 
     [HttpPost("publish")]
+    [RequireAcceptLanguageHeader]
     public async Task<ActionResult> Publish(string data)
     {
         await _employeeAppService.Publish(data);
@@ -75,6 +109,7 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost("handleEvent")]
+    [RequireAcceptLanguageHeader]
     public IActionResult HandleEvent([FromBody] EventGridEvent[] events)
     {
 
