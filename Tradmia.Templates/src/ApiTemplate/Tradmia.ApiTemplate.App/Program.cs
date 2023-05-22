@@ -40,6 +40,13 @@ _ = builder.Services.AddEndpointsApiExplorer()
             .AllowCredentials()
             .WithExposedHeaders("ContinuationToken", "TotalCount")));
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { "ca-ES", "es-ES", "en" };
+    options.SetDefaultCulture(supportedCultures[0])
+        .AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures);
+});
 
 builder.Services.AddLogging();
 

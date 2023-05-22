@@ -11,6 +11,7 @@ namespace Tradmia.ApiTemplate.App.Controllers.v1_00;
 
 [ApiController]
 [Route("api/v1_00/[controller]")]
+[RequireAcceptLanguageHeader]
 public class EmployeesController : ControllerBase
 {
 
@@ -49,7 +50,6 @@ public class EmployeesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesDefaultResponseType]
-    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<Guid>> PostAsync(CreateEmployeeDto employee)
     {
         Guid result = await _employeeAppService.CreateAsync(employee);
@@ -57,7 +57,6 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPut]
-    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> Put(EmployeeDto employee)
     {
         await _employeeAppService.UpdateAsync(employee);
@@ -65,7 +64,6 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPatch]
-    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> Patch(UpdateEmployeeDto employee)
     {
         await _employeeAppService.PatchAsync(employee);
@@ -73,14 +71,12 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpGet]
-    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAllAsync(CancellationToken cancellationToken)
     {
         return Ok(await _employeeAppService.GetAsync(cancellationToken));
     }
 
     [HttpGet("{id}")]
-    [RequireAcceptLanguageHeader]
     public async Task<ActionResult<Employee>> GetByIdAsync(Guid id)
     {
         var employee = await _employeeAppService.GetByIdAsync(id);
@@ -92,7 +88,6 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [RequireAcceptLanguageHeader]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         await _employeeAppService.DeleteAsync(id);
@@ -101,7 +96,6 @@ public class EmployeesController : ControllerBase
 
 
     [HttpPost("publish")]
-    [RequireAcceptLanguageHeader]
     public async Task<ActionResult> Publish(string data)
     {
         await _employeeAppService.Publish(data);
@@ -109,7 +103,6 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost("handleEvent")]
-    [RequireAcceptLanguageHeader]
     public IActionResult HandleEvent([FromBody] EventGridEvent[] events)
     {
 
